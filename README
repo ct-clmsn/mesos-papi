@@ -53,3 +53,10 @@ Makefile variables will need to be modified.
 
 * RTSUPPORT = used to select which interpreter(s)
               support to enable
+
+-----
+
+dependencies
+
+  * PAPI http://icl.cs.utk.edu/papi/
+  * Python, R, Ruby, Jvm and their respective dependencies
