@@ -1,0 +1,55 @@
+cloud-papi
+
+this project implements a Mesos Executor that adds
+papi (performance counter) support to Python, JVM,
+R, Ruby, and C/C++ applications running on a Mesos
+cluster/cloud.
+
+the implementation uses a fork-exec technique to
+attach the papi library to the user's process in
+order to collect performance counter data
+
+for python, jvm, r, ruby users, each system's
+runtime (interpreter or virtual machine) is embedded
+into the executor - this was a requirement in order
+to collect accurate performance counter data using
+papi's 3rd party, process attachment feature set
+
+papi only supports collection of two counters
+worth of data
+
+data is stored using google's log library
+
+users will be able to run the papi mesos executor
+by adding a label to a task called 'PAPI' and then
+add a space delimited string which enumerates up
+to 2 papi performance counters to enable.
+
+cloudpapi.cpp, line 239 provides an enumerative
+listing of available performance counters.
+
+-----
+
+container users won't necessarily be able to use
+the MesosExecutor. papi will only work when it's
+attached to the interpreter's runtime executing
+the interpreted program.
+
+to that end, embedded versions of python, jvm, r,
+and ruby have been integrated with papi's third
+party attach capabilities.
+
+containers desiring papi support will need to add
+a papi-enabled version of their respective
+interpreter to the container.
+
+-----
+
+Users will need to modify the project Makefile
+in order to compile the codes. The following
+Makefile variables will need to be modified.
+
+* MESOS_HOME = path to the mesos source tree
+
+* RTSUPPORT = used to select which interpreter(s)
+              support to enable
